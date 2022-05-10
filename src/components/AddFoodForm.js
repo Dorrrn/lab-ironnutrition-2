@@ -61,11 +61,10 @@ export default function AddFoodForm(props) {
             Create
           </button>
         </form>
-        <button onClick={handleHide}>Hide</button>
       </div>
 
       <button id={isHide ? 'hide' : 'show'} onClick={handleHide}>
-        Show
+        {isHide ? 'Hide' : 'Show'}
       </button>
     </div>
   );
