@@ -9,7 +9,7 @@ export default function AddFoodForm(props) {
     servings: '',
   });
 
-  const handleChange = (event) => {
+  const handleInputChange = (event) => {
     const value = event.target.value;
     setAddedFood({ ...addedFood, [event.target.name]: value });
   };
@@ -31,7 +31,7 @@ export default function AddFoodForm(props) {
             name="name"
             value={addedFood.name}
             type="text"
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
           <label>Image</label>
           <input
@@ -39,14 +39,14 @@ export default function AddFoodForm(props) {
             value={addedFood.image}
             type="text"
             placeholder="https://via.placeholder.com/30x30"
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
           <label>Calories</label>
           <input
             name="calories"
             value={addedFood.calories}
             type="number"
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
           <label>Servings</label>
           <input
@@ -55,7 +55,7 @@ export default function AddFoodForm(props) {
             type="number"
             min="1"
             max="99"
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
           <button onClick={submitButton} id="buttonCreate">
             Create

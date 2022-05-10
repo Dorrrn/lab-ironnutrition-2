@@ -1,0 +1,60 @@
+NOTES
+
+_____________________________
+Iteration 0 - Setup
+
+---> $ npm install bulma --save  (css framework)
+---> in App.js
+--> import 'bulma/css/bulma.css';
+--> import foods from './foods.json';
+
+________________________
+Iteration 1 - FoodBox
+
+---> add FoodBox.js component in components folder
+---> use html given in instructions
+---> import FoodBox into App.js to render one food
+
+__________________________
+Iteration 2 - Display foods from json
+
+---> use props in FoodBox component (check json for values)
+---> in App.js use .map() method to render all foods from json
+---> (here no state neccessary)
+
+{foods.map((food) => {
+return (
+<FoodBox
+name={food.name}
+calories={food.calories}
+image={food.image}
+/>
+);
+})}
+
+
+__________________________
+Iteration 3 - Add new food form (tricky)
+
+---> add AddFoodForm.js component
+---> create functions to handleInputChange
+---> create Form with all input fields
+---> create function to hide/show form in button
+(-> useState to hide form / -> change property in CSS with class to display/undisplay)
+
+---> in App.js
+-> import AddFormFom.js
+-> useState to change rendered FoodsList
+
+________________________
+Iteration 4 - Searchbar
+
+---> add searchbar in App.js / no need for extra component
+-> add state for filteredFoods
+-> handleSearchInput with Form
+-> render Foods (( iternary operator))
+-> handleDelete
+
+
+__________________
+Iteration 5 - Create add-button // Todays Food

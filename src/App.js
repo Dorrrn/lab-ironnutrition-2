@@ -58,7 +58,7 @@ function App() {
               })
               .map((food, index) => {
                 return (
-                  <div key={food.name + index}>
+                  <div key={index}>
                     <FoodBox
                       name={food.name}
                       calories={food.calories}
@@ -69,16 +69,6 @@ function App() {
                 );
               })
           )}
-
-          {/* {foods.map((food) => {
-            return (
-              <FoodBox
-                name={food.name}
-                calories={food.calories}
-                image={food.image}
-              />
-            );
-          })} */}
         </div>
       </div>
     </>
