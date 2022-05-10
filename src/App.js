@@ -1,25 +1,36 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import 'bulma/css/bulma.css';
-import foods from './foods.json';
+import foodsList from './foods.json';
 import FoodBox from './components/FoodBox';
+import AddFoodForm from './components/AddFoodForm';
 
 function App() {
-  const [food, setFoods] = useState(foods);
+  const [foods, setFoods] = useState(foodsList);
+
+  const handleSubmit = (event, newFood) => {
+    event.preventDefault();
+    const updateFood = [newFood, ...foods];
+    setFoods(updateFood);
+  };
 
   return (
-    <div className="App">
-      {foods.map((food) => {
-        return (
-          <FoodBox
-            name={food.name}
-            calories={food.calories}
-            image={food.image}
-          />
-        );
-      })}
-    </div>
+    <>
+      <div className="App">
+        <div className="AddFood">
+          <AddFoodForm handleSubmit={handleSubmit} />
+        </div>
+
+        {foods.map((food) => {
+          return (
+            <FoodBox
+              name={food.name}
+              calories={food.calories}
+              image={food.image}
+            />
+          );
+        })}
+      </div>
+    </>
   );
 }
 

@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
-import { Input, Button } from 'antd';
 
 export default function AddFoodForm(props) {
   const [isHide, setIsHide] = useState(false);
   const [addedFood, setAddedFood] = useState({
     name: '',
-    image: '',
+    image: 'https://via.placeholder.com/30x30',
     calories: '',
     servings: '',
   });
 
-  const handleInputChange = (event) => {
-    setAddedFood((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }));
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setAddedFood({ ...addedFood, [event.target.name]: value });
   };
 
   const submitButton = (event) => {
@@ -30,46 +27,46 @@ export default function AddFoodForm(props) {
       <div className={isHide ? 'show' : 'hide'}>
         <form>
           <label>Name</label>
-          <Input
+          <input
             name="name"
             value={addedFood.name}
             type="text"
-            onChange={handleInputChange}
+            onChange={handleChange}
           />
           <label>Image</label>
-          <Input
+          <input
             name="image"
             value={addedFood.image}
             type="text"
-            placeholder="https://example.com/food-image.jpg"
-            onChange={handleInputChange}
+            placeholder="https://via.placeholder.com/30x30"
+            onChange={handleChange}
           />
           <label>Calories</label>
-          <Input
+          <input
             name="calories"
             value={addedFood.calories}
             type="number"
-            onChange={handleInputChange}
+            onChange={handleChange}
           />
           <label>Servings</label>
-          <Input
+          <input
             name="servings"
             value={addedFood.servings}
             type="number"
             min="1"
             max="99"
-            onChange={handleInputChange}
+            onChange={handleChange}
           />
-          <Button onClick={submitButton} id="buttonCreate">
+          <button onClick={submitButton} id="buttonCreate">
             Create
-          </Button>
+          </button>
         </form>
-        <Button onClick={handleHide}>Hide</Button>
+        <button onClick={handleHide}>Hide</button>
       </div>
 
-      <Button id={isHide ? 'hide' : 'show'} onClick={handleHide}>
+      <button id={isHide ? 'hide' : 'show'} onClick={handleHide}>
         Show
-      </Button>
+      </button>
     </div>
   );
 }
