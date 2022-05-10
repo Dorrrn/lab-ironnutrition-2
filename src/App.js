@@ -1,24 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import 'bulma/css/bulma.css';
+import foods from './foods.json';
+import FoodBox from './components/FoodBox';
 
 function App() {
+  const [food, setFoods] = useState(foods);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {foods.map((food) => {
+        return (
+          <FoodBox
+            name={food.name}
+            calories={food.calories}
+            image={food.image}
+          />
+        );
+      })}
     </div>
   );
 }
