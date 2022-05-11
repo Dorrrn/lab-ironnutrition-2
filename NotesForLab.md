@@ -1,32 +1,58 @@
 # Notes for lab
 
-# Iteration 0 - Setup
+## Iteration 0 - Setup
 
-1. $ npm install bulma --save (css framework)
-2. in App.js
-   --> import 'bulma/css/bulma.css';
-   --> import foods from './foods.json';
-
----
-
-# Iteration 1 - FoodBox
-
-1. add new FoodBox.js component
-2. return the given html in instructions to render the food
-3. import FoodBox component into App.js and call it to render (in return...)  
-   -> import FoodBox from './components/FoodBox';
-   -> return <FoodBox />
-
----
-
-# Iteration 2 - Display foods from json
-
-1. use props in FoodBox.js component and change values accordingly (check json for values)
-2. in App.js use .map() method to render all foods from json
-   (no state neccessary here)
+### 1. Install bulma (css framework)
 
 ```
-   {foods.map((food) => {
+$ npm install bulma --save
+```
+
+### 2. import bulma and foods.json to App.js
+
+```
+import 'bulma/css/bulma.css';
+import foodsList from './foods.json';
+```
+
+---
+
+## Iteration 1 - FoodBox
+
+### 1. create new FoodBox.js component
+
+-> create components folder and create file FoodBox.js
+
+### 2. return the given html from instructions to render food
+
+### 3. import FoodBox component into App.js and render in return...
+
+```
+import FoodBox from './components/FoodBox';
+```
+
+```
+return <FoodBox />
+```
+
+---
+
+## Iteration 2 - Display foods from json
+
+### 1. use props in FoodBox.js component
+
+-> change values accordingly (check json file for keys) - for example:
+
+```
+ <img src={props.image} alt={props.name} />
+```
+
+### 2. in App.js use .map() method to render all foods from json
+
+-> (no state neccessary here)
+
+```
+   {foodsList.map((food) => {
    return (
    <FoodBox
       name={food.name}
@@ -39,24 +65,55 @@
 
 ---
 
-# Iteration 3 - Add new food form (tricky)
+## Iteration 3 - Add new food form (tricky)
 
-## 1. add new AddFoodForm.js component
+### 1. create new AddFoodForm.js component
 
-## 2. create Form with all input values (name, image, calories, servings)
+### 2. create Form with all input values (name, image, calories, servings)
 
 ```
-    <label>Image</label>
-         <input
-         name="image"
-         value={addedFood.image}
-         type="text"
-         placeholder="https://via.placeholder.com/30x30"
-         onChange={handleInputChange}
-         />
+   <div class="AddFoodForm">
+      <div className={isHide ? 'show' : 'hide'}>
+        <form>
+          <label>Name</label>
+          <input
+            name="name"
+            value={addedFood.name}
+            type="text"
+            onChange={handleInputChange}
+          />
+          <label>Image</label>
+          <input
+            name="image"
+            value={addedFood.image}
+            type="text"
+            placeholder="https://via.placeholder.com/30x30"
+            onChange={handleInputChange}
+          />
+          <label>Calories</label>
+          <input
+            name="calories"
+            value={addedFood.calories}
+            type="number"
+            onChange={handleInputChange}
+          />
+          <label>Servings</label>
+          <input
+            name="servings"
+            value={addedFood.servings}
+            type="number"
+            min="1"
+            max="99"
+            onChange={handleInputChange}
+          />
+          <button onClick={submitButton} id="buttonCreate">
+            Create
+          </button>
+        </form>
+      </div>
 ```
 
-## 3. create useState for addedFood with initial states for these values (empty strings)
+### 3. create useState for addedFood with initial states for these values (empty strings)
 
 ```
    const [addedFood, setAddedFood] = useState({
@@ -67,7 +124,7 @@
    });
 ```
 
-## 4. create function to handleInputChange (important call setAddedFood)
+### 4. create function to handleInputChange (important call setAddedFood)
 
 ```
    const handleInputChange = (event) => {
@@ -76,7 +133,7 @@
    };
 ```
 
-## 5. create function for submitButton and define function handleSubmit as props to App.js
+### 5. create function for submitButton and define function handleSubmit as props to App.js
 
 ```
 const submitButton = (event) => {
@@ -84,15 +141,19 @@ props.handleSubmit(event, addedFood);
 };
 ```
 
-### // function to hide
+## // function to hide
 
-## 6. add useState to change this property
+### 6. add useState to change isHide state
+
+-> set initial state to 'false'
 
 ```
 const [isHide, setIsHide] = useState(false);
 ```
 
-## 7. create function to hide/show form in button
+### 7. create function to hide/show form in button
+
+-> setIsHide function will always do what is different the current state (!isHide)
 
 ```
   const handleHide = () => {
@@ -108,17 +169,23 @@ const [isHide, setIsHide] = useState(false);
 }
 ```
 
-## 9. add className to Form div
+## 9. add div around Form with className
+
+-> use iternary to change className
 
 ```
 <div className={isHide ? 'show' : 'hide'}>
 ```
 
-### // Lift up to App.js
+## // Lift up to App.js
 
-## 10. in App.js import AddFoodForm.js
+### 10. import AddFoodForm.js to App.js
 
-## 11. now add useState to change rendered FoodsList
+```
+import AddFoodForm from './components/AddFoodForm';
+```
+
+## 11. add useState to change rendered FoodsList
 
 ```
 const [foods, setFoods] = useState(foodsList);
@@ -134,25 +201,33 @@ const [foods, setFoods] = useState(foodsList);
     };
 ```
 
-## 13. add AddFoodForm component in return to render
+## 13. add AddFoodForm.js component in return to render
 
 ```
     <AddFoodForm handleSubmit={handleSubmit} />
+```
+
+## 14. change the array that uses .map()
+
+-> now we not tell to render foodsList from json only, but also the added food
+-> so use foods from state
+
+```
+foods.map()
+...
 ```
 
 ---
 
 # Iteration 4 - Search
 
-## 1. add searchbar html with input field in App.js (no need for extra component)
-
-## 2. add state for filteredFoods
+## 1. add state for filteredFoods
 
 ```
 const [filteredFoods, setFilteredFoods] = useState('');
 ```
 
-## 3. add function handleSearchInput
+## 2. add function handleSearchInput
 
 ```
 const handleSearchInput = (event) => {
@@ -160,10 +235,25 @@ setFilteredFoods(event.target.value);
 };
 ```
 
+## 3. add searchbar html
+
+-> add input field in return of App.js (no need to create extra component)
+
+```
+<div className="Searchbar">
+         <input
+            value={filteredFoods}
+            placeholder="Search food"
+            type="text"
+            onChange={handleSearchInput}
+          />
+        </div>
+```
+
 ## 4. change your foods.map()
 
-(filter before map + iternary operator for when foodsList = 0))
-(when filter make it case insensitive with tolowerCase())
+-> filter before map + iternary operator for when foodsList = 0)
+-> when filter make it case-insensitive with toLocaleLowerCase()
 
 ```
 {foods.length === 0 ? (
@@ -188,4 +278,4 @@ setFilteredFoods(event.target.value);
           )}
 ```
 
-# Iteration 5 - Create add-button // Todays Food
+## Iteration 5 - Create add-button // Todays Food
