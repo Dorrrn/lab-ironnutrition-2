@@ -8,15 +8,19 @@ import './App.css';
 function App() {
   const [foods, setFoods] = useState(foodsList);
   const [filteredFoods, setFilteredFoods] = useState('');
+  const [todaysFoods, setTodaysFoods] = useState([]);
 
   const handleSubmit = (event, newFood) => {
     event.preventDefault();
-    const updateFood = [newFood, ...foods];
-    setFoods(updateFood);
+    setFoods((prevFood) => [newFood, ...prevFood]);
   };
 
   const handleSearchInput = (event) => {
     setFilteredFoods(event.target.value);
+  };
+
+  const handleAddFood = (addedFood) => {
+    setTodaysFoods((prevTodaysFood) => [addedFood, ...prevTodaysFood]);
   };
 
   return (
@@ -38,28 +42,46 @@ function App() {
             onChange={handleSearchInput}
           />
         </div>
+        <div className="columns">
+          <div className="column">
+            <div className="FoodsList">
+              {foods.length === 0 ? (
+                <h1>Oops! There is no more content to show</h1>
+              ) : (
+                foods
+                  .filter((food) => {
+                    const lowerFilter = filteredFoods.toLowerCase();
+                    return food.name.toLowerCase().includes(lowerFilter);
+                  })
+                  .map((food, index) => {
+                    return (
+                      <div key={index}>
+                        <FoodBox food={food} onAddFood={handleAddFood} />
+                      </div>
+                    );
+                  })
+              )}
+            </div>
+          </div>
 
-        <div className="FoodsList">
-          {foods.length === 0 ? (
-            <h1>Oops! There is no more content to show</h1>
-          ) : (
-            foods
-              .filter((food) => {
-                const lowerFilter = filteredFoods.toLocaleLowerCase();
-                return food.name.toLocaleLowerCase().includes(lowerFilter);
-              })
-              .map((food, index) => {
-                return (
-                  <div key={index}>
-                    <FoodBox
-                      name={food.name}
-                      calories={food.calories}
-                      image={food.image}
-                    />
-                  </div>
-                );
-              })
-          )}
+          <div className="column">
+            <h1>Today's food</h1>
+            {todaysFoods.map((todaysFood, index) => {
+              return (
+                <p>
+                  {todaysFood.amount} x {todaysFood.food.name}(
+                  {todaysFood.food.calories} cal)
+                </p>
+              );
+            })}
+            <p>
+              Total:{' '}
+              {todaysFoods.reduce((acc, curr) => {
+                return acc + curr.food.calories * curr.amount;
+              }, 0)}{' '}
+              calories
+            </p>
+          </div>
         </div>
       </div>
     </>
