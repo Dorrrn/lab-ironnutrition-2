@@ -279,3 +279,60 @@ setFilteredFoods(event.target.value);
 ```
 
 ## Iteration 5 - Create add-button // Todays Food
+
+### 1. Create new State
+
+-> state with empty array
+
+```
+const [todaysFoods, setTodaysFoods] = useState([]);
+```
+
+### 2. Create handleAddFood function in App.js
+
+-> function to add value to todaysFood, when clicking on add-button
+
+```
+ const handleAddFood = (addedFood) => {
+    setTodaysFoods((prevTodaysFood) => [addedFood, ...prevTodaysFood]);
+  };
+```
+
+### 3. Pass down handleAddFood into child component FoodBox.js
+
+```
+<FoodBox food={food} onAddFood={handleAddFood} />
+```
+
+### 4. Inside FoodBox.js
+
+--> add onClick event on button(+); through onClick we sending the updated food object with new amount from input field
+
+```
+ <button
+   onClick={() => {
+   props.onAddFood({
+      food: food,
+      amount: amount,
+   });
+   }}
+>
+```
+
+--> create state to hold amount
+
+```
+ const [amount, setAmount] = useState(1);
+```
+
+--> create function to handle amount input field
+
+```
+ const handleChangeAmount = (event) => {
+    setAmount(event.target.value);
+  };
+```
+
+### 5. in App.js - Iterate through todaysFoods array to display amount, name, calories
+
+-> Hint: display correct quantity after adding foods

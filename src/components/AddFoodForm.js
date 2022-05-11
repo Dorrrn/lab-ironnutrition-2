@@ -25,7 +25,7 @@ export default function AddFoodForm(props) {
   return (
     <div class="AddFoodForm">
       <div className={isHide ? 'show' : 'hide'}>
-        <form>
+        <form onSubmit={submitButton}>
           <label>Name</label>
           <input
             name="name"
@@ -48,16 +48,8 @@ export default function AddFoodForm(props) {
             type="number"
             onChange={handleInputChange}
           />
-          <label>Servings</label>
-          <input
-            name="servings"
-            value={addedFood.servings}
-            type="number"
-            min="1"
-            max="99"
-            onChange={handleInputChange}
-          />
-          <button onClick={submitButton} id="buttonCreate">
+
+          <button type="submit" id="buttonCreate">
             Create
           </button>
         </form>
