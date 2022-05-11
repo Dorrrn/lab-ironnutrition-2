@@ -19,14 +19,6 @@ function App() {
     setFilteredFoods(event.target.value);
   };
 
-  const handleDelete = (event) => {
-    setFoods(
-      foods.filter((foodsDelete) => {
-        return foodsDelete.name !== event;
-      })
-    );
-  };
-
   return (
     <>
       <div className="App">
@@ -63,7 +55,6 @@ function App() {
                       name={food.name}
                       calories={food.calories}
                       image={food.image}
-                      handleDelete={() => handleDelete(food.name)}
                     />
                   </div>
                 );
