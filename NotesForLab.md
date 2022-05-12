@@ -65,16 +65,16 @@ return <FoodBox />
 
 ---
 
-## Iteration 3 - Add new food form (tricky)
+## Iteration 3 - Add new food form
 
 ### 1. create new AddFoodForm.js component
 
-### 2. create Form with all input values (name, image, calories, servings)
+### 2. create onSubmit-Form with all input values (name, image, calories, servings)
 
 ```
    <div class="AddFoodForm">
       <div className={isHide ? 'show' : 'hide'}>
-        <form>
+        <form onSubmit={submitButton}>
           <label>Name</label>
           <input
             name="name"
@@ -97,16 +97,8 @@ return <FoodBox />
             type="number"
             onChange={handleInputChange}
           />
-          <label>Servings</label>
-          <input
-            name="servings"
-            value={addedFood.servings}
-            type="number"
-            min="1"
-            max="99"
-            onChange={handleInputChange}
-          />
-          <button onClick={submitButton} id="buttonCreate">
+
+          <button type="submit" id="buttonCreate">
             Create
           </button>
         </form>
@@ -125,6 +117,8 @@ return <FoodBox />
 ```
 
 ### 4. create function to handleInputChange (important call setAddedFood)
+
+--> all fields with onChange
 
 ```
    const handleInputChange = (event) => {
